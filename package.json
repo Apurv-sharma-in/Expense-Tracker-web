@@ -1,0 +1,28 @@
+{
+  "name": "04_build_expense_tracker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apurv-sharma-in/Expense-Tracker-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Apurv-sharma-in/Expense-Tracker-web/issues"
+  },
+  "homepage": "https://github.com/Apurv-sharma-in/Expense-Tracker-web#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "mysql2": "^3.24.6",
+    "mysql3": "^0.7.12",
+    "sequelize": "^6.37.8"
+  }
+}
