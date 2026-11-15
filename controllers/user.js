@@ -19,6 +19,29 @@ const createUser = async (req,res) =>{
         res.status(500).json('unbale to create user');
     }
 };
+
+const checkLogin = async (req,res) =>{
+    try {
+        const {email,password} = req.body;
+        const getUser = await userTable.findOne({
+            where:{
+                email:email
+            }
+        })
+         if (!getUser) {
+            return res.status(404).json({ message: 'Email Not Found.' });
+        }
+        if(getUser.password !==password){
+            return res.status(401).json({ message: 'Wrong Password.' });
+
+        }
+    res.status(200).json({ message: 'Welcome.' });
+        
+    } catch (error) {
+        res.status(500).json('unbale to Find user');
+    }
+}
 module.exports ={
-    createUser
+    createUser,
+    checkLogin
 }
