@@ -1,18 +1,21 @@
 const {Sequelize} = require('sequelize');
 const userTable =require('../models/user');
+const bcrypt = require('bcrypt')
 
 const createUser = async (req,res) =>{
     try {
        const {name ,email ,password} = req.body;
        const existingUser = await userTable.findOne({ where: { email: email } });
-
-        if (existingUser) {
+       const saltRounds =10 ; 
+       const haspassword = await bcrypt.hash(password ,saltRounds); 
+       
+       if (existingUser) {
             return res.status(409).json({ message: 'User already exists with this email. Please login.' });
         }
        const createUser = await userTable.create({
         name:name,
         email:email,
-        password:password
+        password:haspassword
        })  
        res.status(201).send('User added Successfully');
     } catch (error) {
@@ -28,10 +31,11 @@ const checkLogin = async (req,res) =>{
                 email:email
             }
         })
-         if (!getUser) {
+        if (!getUser) {
             return res.status(404).json({ message: 'Email Not Found.' });
         }
-        if(getUser.password !==password){
+        const ispasswordmatch = await bcrypt.compare(password, getUser.password)
+        if(!ispasswordmatch){
             return res.status(401).json({ message: 'Wrong Password.' });
 
         }
