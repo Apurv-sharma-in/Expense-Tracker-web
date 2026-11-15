@@ -8,6 +8,7 @@ const addExpense = async (req, res) => {
       amount: amount,
       description: description,
       category: category,
+      userId: req.user.userId
     });
     res.status(201).json("Amount Added Successfully");
   } catch (error) {
@@ -17,7 +18,9 @@ const addExpense = async (req, res) => {
 
 const getAllExpense = async (req, res) => {
   try {
-    const fetchAllUser = await createExpenseTable.findAll();
+    const fetchAllUser = await createExpenseTable.findAll({
+        where:{userId:req.user.userId}
+    });
     res.status(200).json(fetchAllUser);
   } catch (error) {
     res.status(500).json("Unabel to Fetch Expense");
@@ -33,6 +36,7 @@ const editExpense = async (req, res) => {
       {
         where: {
           id: id,
+          userId:req.user.userId
         },
       },
     );

@@ -82,7 +82,8 @@ loginForm.addEventListener("submit", async (e) => {
     loginMessageError.textContent =
       loginResponse.data.message || "User Login successfully!";
     loginMessageError.style.color = "#16a34a";
-    window.location.href = 'dashboard.html';
+   localStorage.setItem('token', loginResponse.data.token);
+window.location.href = 'dashboard.html';
     loginForm.reset();
   } catch (error) {
     console.log(error);

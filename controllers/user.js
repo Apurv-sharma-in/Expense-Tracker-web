@@ -1,6 +1,8 @@
 const { Sequelize } = require("sequelize");
 const userTable = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const secretKey = 'a8f5f167f44f4964e6c998dee827110c84928374659102938475610293847561';
 
 const createUser = async (req, res) => {
   try {
@@ -42,7 +44,11 @@ const checkLogin = async (req, res) => {
     if (!ispasswordmatch) {
       return res.status(401).json({ message: "Wrong Password." });
     }
-    res.status(200).json({ message: "Welcome." });
+    const token = jwt.sign({userId : getUser.id},secretKey);
+    return res.status(200).json({ 
+      message: "Welcome.",
+      token:token
+    });
   } catch (error) {
     res.status(500).json("unbale to Find user");
   }

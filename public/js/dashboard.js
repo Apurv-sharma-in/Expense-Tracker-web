@@ -1,4 +1,12 @@
 const addBtn = document.getElementById('addExpense');
+const token = localStorage.getItem('token');
+if(!token){
+    window.location.href ='index.html'
+}
+const config = {
+    headers: { Authorization: token }
+};
+
 addBtn.addEventListener('click',async (e)=>{
     e.preventDefault();
     
@@ -12,7 +20,7 @@ addBtn.addEventListener('click',async (e)=>{
             amount,
             description,
             category
-        });
+        },config);
         form.reset();
         display();
         
@@ -26,7 +34,7 @@ async function display() {
     try {
         const ul = document.getElementById('list');
         ul.innerHTML="";
-        const response= await axios.get("http://localhost:3000/user/");
+        const response= await axios.get("http://localhost:3000/user/",config);
 
         response.data.forEach((user) => {
             const li = document.createElement("li");
@@ -38,7 +46,7 @@ async function display() {
 
       addDeleteButton.addEventListener("click", async () => {
         try {
-          await axios.delete(`http://localhost:3000/user/${user.id}`);
+          await axios.delete(`http://localhost:3000/user/${user.id}`,config);
           display();
         } catch (error) {
           console.error("Delete Error", error);
