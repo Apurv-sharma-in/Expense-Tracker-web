@@ -24,6 +24,7 @@ app.use(express.json());
 
 app.use('/user',userRouter);
 app.use('/purchase',userRouter)
+app.use('/premium',userRouter)
 
 
 

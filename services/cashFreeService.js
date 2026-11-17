@@ -26,6 +26,9 @@ const createOrder = async (orderId, amount, customerId) => {
 
 const getOrderPayments = async (orderId) => {
     const response = await cashfree.PGOrderFetchPayments(orderId);
+
+    console.error("Cashfree Error Status:", error.response?.status);
+    console.error("Cashfree Error Data:", error.response?.data);
     return response.data;
 };
 

@@ -11,13 +11,13 @@
 <body>
     <header>
             <button id="byPremium" type="button">Buy Premium Membership</button>
-        
-    </header>
-    <div class="addItem">
-        <h1>Expense Tracker</h1>
-        
+            <button id="learderBoard" style="display: none;" type="button">Leader Board</button>
+            
+        </header>
+        <div class="addItem" id="expenseSection">
+            <h1>Expense Tracker</h1>
         <form action="addItem">
-           
+            
             <label for="amunt">Amount:</label>
             <input type="number" name="amount" id="amount">
 
@@ -37,6 +37,11 @@
         </form>
         <ul id="list"></ul>
     </div>
+     <div class="leaderboardContainer" id="leaderboardSection" style="display: none;" >
+                <h2>Expense Leaderboard</h2>
+                <ul id="leaderboardList"></ul>
+                <button id="backToExpensesBtn" type="button">Back to Expenses</button>
+            </div>
     <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
     <script src="../js/dashboard.js"></script>
 </body>
