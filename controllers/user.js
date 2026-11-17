@@ -47,7 +47,8 @@ const checkLogin = async (req, res) => {
     const token = jwt.sign({userId : getUser.id},secretKey);
     return res.status(200).json({ 
       message: "Welcome.",
-      token:token
+      token:token,
+      isPremium: getUser.isPremium 
     });
   } catch (error) {
     res.status(500).json("unbale to Find user");

@@ -83,6 +83,7 @@ loginForm.addEventListener("submit", async (e) => {
       loginResponse.data.message || "User Login successfully!";
     loginMessageError.style.color = "#16a34a";
    localStorage.setItem('token', loginResponse.data.token);
+   localStorage.setItem('isPremium', loginResponse.data.isPremium);
 window.location.href = 'dashboard.html';
     loginForm.reset();
   } catch (error) {

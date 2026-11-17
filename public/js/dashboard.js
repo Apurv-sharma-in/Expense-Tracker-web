@@ -1,4 +1,5 @@
 const addBtn = document.getElementById('addExpense');
+const buyPremium = document.getElementById('byPremium');
 const token = localStorage.getItem('token');
 if(!token){
     window.location.href ='index.html'
@@ -6,6 +7,52 @@ if(!token){
 const config = {
     headers: { Authorization: token }
 };
+
+
+
+function showPremiumUI() {
+    buyPremium.textContent = 'You are a Premium User';
+    buyPremium.disabled = true;
+    buyPremium.style.backgroundColor = '#16a34a';
+    buyPremium.style.cursor = 'default';
+}
+
+if (localStorage.getItem('isPremium') === 'true') {
+    showPremiumUI();
+}
+
+buyPremium.addEventListener('click', async () => {
+    try {
+        const cashfree = Cashfree({ mode: 'sandbox' });
+        const response = await axios.post('http://localhost:3000/purchase/premiummembership', {}, config);
+        const { payment_session_id, order_id } = response.data;
+
+        await cashfree.checkout({
+            paymentSessionId: payment_session_id,
+            redirectTarget: '_modal'
+        });
+
+        await verifyTransaction(order_id);
+    } catch (error) {
+        alert('TRANSACTION FAILED');
+    }
+});
+
+async function verifyTransaction(orderId) {
+    try {
+        const response = await axios.post('http://localhost:3000/purchase/updatetransactionstatus', { order_id: orderId }, config);
+        if (response.data.success) {
+            localStorage.setItem('isPremium', 'true');
+            showPremiumUI();
+            alert('Transaction successful');
+        } else {
+            alert('TRANSACTION FAILED');
+        }
+    } catch (error) {
+        alert('TRANSACTION FAILED');
+    }
+}
+
 
 addBtn.addEventListener('click',async (e)=>{
     e.preventDefault();
