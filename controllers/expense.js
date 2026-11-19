@@ -1,6 +1,7 @@
 const sequelize = require("../utils/db");
 const createExpenseTable = require("../models/expense");
 const user = require("../models/user");
+const {predictCatagory} = require('../services/genAi');
 
 const addExpense = async (req, res) => {
   const t = await sequelize.transaction();
@@ -104,9 +105,27 @@ const deleteExpense = async (req, res) => {
   }
 };
 
+const suggestCategory = async (req,res) => {
+  
+try {
+    const {description} = req.body
+    if(!description || description.trim().length < 3){
+        res.status(400).json('Description is not sufficient');
+    }
+      const category =  await predictCatagory(description)
+      res.status(200).json({category})
+    
+
+} catch (error) {
+  console.error("EXACT AI CONTROLLER ERROR:", error);
+  res.status(500).json({ message: error.message });
+}
+}
+
 module.exports = {
   addExpense,
   getAllExpense,
   editExpense,
-  deleteExpense
+  deleteExpense,
+  suggestCategory
 };

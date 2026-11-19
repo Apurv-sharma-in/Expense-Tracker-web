@@ -22,4 +22,6 @@ router.post('/updatetransactionstatus', authentication, purchaseController.updat
 router.get('/leaderboard',authentication,leaderboard.getAllExpense);
 
 
+router.post('/suggestCategory',authentication,expenseController.suggestCategory);
+
 module.exports = router;

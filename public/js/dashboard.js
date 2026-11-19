@@ -6,6 +6,8 @@ const leaderboardSection = document.getElementById('leaderboardSection');
 const leaderboardList = document.getElementById('leaderboardList');
 const backToExpensesBtn = document.getElementById('backToExpensesBtn');
 const expenseSection = document.getElementById('expenseSection');
+const descriptionInput = document.getElementById("description");
+const category = document.getElementById("category");
 
 if (!token) {
   window.location.href = "index.html";
@@ -91,6 +93,49 @@ addBtn.addEventListener("click", async (e) => {
     alert("Faild to Add");
   }
 });
+
+const aiStatus =document.getElementById('aiStatus');
+let typingTimer;
+
+
+descriptionInput.addEventListener("input", async () => {
+  clearTimeout(typingTimer);
+  const description = descriptionInput.value.trim();
+
+  if (description.length < 3) {
+    aiStatus.textContent ="";
+    return;
+    }
+    aiStatus.textContent = "✨ AI thinking...";
+  aiStatus.style.color = "#2563eb";
+  typingTimer = setTimeout (async()=>{
+
+  
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/user/suggestCategory",
+      { description },
+      config
+    );
+
+      console.log("AI Response:", response.data); 
+    const suggestedCategory = response.data.category;
+
+    const validOptions = ["movie", "fuel", "food", "grocery", "electronic"];
+    if (validOptions.includes(suggestedCategory)) {
+      category.value = suggestedCategory;
+      aiStatus.textContent = `✨ AI selected: ${suggestedCategory.toUpperCase()}`;
+        aiStatus.style.color = "#16a34a";
+    }
+  } catch (error) {
+    console.error("AI category suggestion failed:", error);
+  } finally {
+      addBtn.disabled = false;
+      addBtn.style.opacity = "1";
+    }
+},600);
+});
+
 
 async function display() {
   try {
