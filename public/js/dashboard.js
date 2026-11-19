@@ -134,7 +134,7 @@ leaderboardBtn.addEventListener('click', async () => {
             li.style.background = '#f9f9f9';
             li.style.borderLeft = '5px solid #2563eb';
             li.style.borderRadius = '4px';
-            li.textContent = `#${index + 1} - ${entry.name} : Total Expense ₹${entry.totalExpense}`;
+            li.textContent = `#${index + 1} - ${entry.name} : Total Expense ₹${entry.totalExpense ||0}`;
             leaderboardList.appendChild(li);
         });
     } catch (error) {
