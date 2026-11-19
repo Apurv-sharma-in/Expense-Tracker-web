@@ -28,7 +28,7 @@ app.use('/premium',userRouter)
 
 
 
-db.sync({force:true}).then(()=>{
+db.sync({alert:true}).then(()=>{
     app.listen(3000,()=>{
         console.log('Server is Running');
     })
