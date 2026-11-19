@@ -1,9 +1,11 @@
 const Order = require('../models/order');
 const User = require('../models/user');
 const { createOrder, getOrderPayments } = require('../services/cashFreeService');
+const sequelize = require('../utils/db');
 
 const purchasePremium = async (req, res) => {
     try {
+        const t = await sequelize.transaction();
         const orderId = 'order_' + Date.now();
         const amount = 99;
 
@@ -13,13 +15,17 @@ const purchasePremium = async (req, res) => {
             orderId: orderId,
             status: 'PENDING',
             userId: req.user.userId
-        });
-
+        },
+        {transaction:t}
+    );
+    
+    await t.commit();
         return res.status(201).json({
             payment_session_id: cashfreeOrder.payment_session_id,
             order_id: orderId
         });
     } catch (error) {
+        await t.rollback();
         console.error('Purchase Premium Error:', error.response ? error.response.data : error);
         return res.status(500).json({ message: 'Something went wrong creating order' });
     }
@@ -27,9 +33,11 @@ const purchasePremium = async (req, res) => {
 
 const updateTransactionStatus = async (req, res) => {
     try {
+        const t = await sequelize.transaction();
         const { order_id } = req.body;
 
         const order = await Order.findOne({ where: { orderId: order_id } });
+        
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
@@ -54,7 +62,7 @@ const updateTransactionStatus = async (req, res) => {
                     { where: { id: req.user.userId } }
                 )
             ]);
-
+            await t.commit();
             return res.status(202).json({
                 success: true,
                 message: 'Transaction Successful'
@@ -68,6 +76,7 @@ const updateTransactionStatus = async (req, res) => {
             });
         }
     } catch (error) {
+        await t.rollback();
         console.error('Update Transaction Error:', error.response ? error.response.data : error);
         return res.status(500).json({ message: 'Failed to update transaction status' });
     }

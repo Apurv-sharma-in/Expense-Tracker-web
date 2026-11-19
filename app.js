@@ -32,7 +32,7 @@ app.use('/premium',userRouter)
 
 
 
-db.sync({alter:true}).then(()=>{
+db.sync().then(()=>{
     app.listen(3000,()=>{
         console.log('Server is Running');
     })
