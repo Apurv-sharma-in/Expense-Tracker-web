@@ -96,3 +96,37 @@ window.location.href = 'dashboard.html';
     loginMessageError.style.color = "#dc2626";
   }
 });
+
+
+//login page forget password
+  const forgetPasswordDiv = document.getElementById('forgetPasswordDiv');
+  const forgetBtn = document.getElementById('forgetPassword');
+const backToLoginBtn = document.getElementById('backToLoginBtn');
+const forgetPasswordForm = document.getElementById('forgetPasswordForm');
+forgetBtn.addEventListener('click',()=>{
+  loginBox.style.display = "none";
+  forgetPasswordDiv.style.display = "block";
+})
+
+  backToLoginBtn.addEventListener('click',()=>{
+    forgetPasswordDiv.style.display = 'none';
+  loginBox.style.display = 'block';
+  })
+
+  forgetPasswordForm.addEventListener('submit',async (e)=>{
+    e.preventDefault();
+    const email = document.getElementById('resetEmail').value.trim();
+    try {
+      const response = await axios.post('http://localhost:3000/password/forgotpassword',{email});
+        alert(response.data.message || 'Password reset link sent to your email!');
+        forgetPasswordForm.reset();
+         forgetPasswordDiv.style.display = 'none';
+    loginBox.style.display = 'block'; 
+      
+    } catch (error) {
+      console.error('Forgot Password Error:', error);
+    alert(error.response?.data?.message || 'Failed to send reset link');
+    }
+  })
+
+//login page forget password 

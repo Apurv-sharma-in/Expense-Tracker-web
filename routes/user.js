@@ -5,6 +5,7 @@ const expenseController =  require('../controllers/expense');
 const authentication = require('../middleware/auth');
 const purchaseController = require('../controllers/order');
 const leaderboard = require('../controllers/premium');
+const passwordController = require('../controllers/passwordForget');
 
 router.post('/signup',userController.createUser);
 router.post('/login',userController.checkLogin);
@@ -23,5 +24,7 @@ router.get('/leaderboard',authentication,leaderboard.getAllExpense);
 
 
 router.post('/suggestCategory',authentication,expenseController.suggestCategory);
+
+router.post('/forgotpassword', passwordController.forgetPassword);
 
 module.exports = router;

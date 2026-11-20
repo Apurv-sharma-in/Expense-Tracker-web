@@ -61,6 +61,15 @@ const checkLogin = async (req, res) => {
     res.status(500).json("unbale to Find user");
   }
 };
+
+const forgetPassword = async (req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }  
+}
+
 module.exports = {
   createUser,
   checkLogin,

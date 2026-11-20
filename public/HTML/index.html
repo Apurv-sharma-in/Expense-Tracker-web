@@ -59,12 +59,22 @@
                 </div>
                 <button type="submit" class="loginSubmit"
                     id="loginSubmit">Login</button>
-
-                <p class="login">
+                <button type="button" class="forgetPassword"
+                    id="forgetPassword">Forget Password</button>
+                    <p class="login">
                     Create new account? <a href="#" id="showSignup">Sign Up</a>
                 </p>
             </form>
         </div>
+            <div id="forgetPasswordDiv" class="login fileds" style="display: none;">
+                        <h2>Rest Password</h2>
+                        <form id="forgetPasswordForm">
+                            <label for="resetEmail">Enter Your Email:</label>
+                            <input type="email" name="resetEmail" id="resetEmail" placeholder="Enter you email" required>
+                            <button type="submit" class="sendResetMail">Send Reset Link</button>
+                            <button type="button" id="backToLoginBtn" class="backToLoginBtn">Back to Login</button>
+                        </form>
+                    </div>
         <script src="../js/auth.js"></script>
     </body>
 </html>
