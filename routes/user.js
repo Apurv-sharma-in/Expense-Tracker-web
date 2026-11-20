@@ -26,5 +26,7 @@ router.get('/leaderboard',authentication,leaderboard.getAllExpense);
 router.post('/suggestCategory',authentication,expenseController.suggestCategory);
 
 router.post('/forgotpassword', passwordController.forgetPassword);
+router.get('/resetpassword/:id', passwordController.resetPasswordForm);
+router.post('/updatepassword/:id', passwordController.updatePassword);
 
 module.exports = router;

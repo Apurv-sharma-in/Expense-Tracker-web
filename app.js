@@ -14,17 +14,24 @@ const userRouter = require('./routes/user')
 const user = require('./models/user');
 const expense = require('./models/expense');
 const order= require('./models/order');
+const forgotPasswordRequest = require('./models/forgotPasswordRequest');
 //TABLE RELATIONSHIP 
 user.hasMany(expense);
 expense.belongsTo(user);
 
 user.hasMany(order);
 order.belongsTo(user);
+
+user.hasMany(forgotPasswordRequest);
+forgotPasswordRequest.belongsTo(user);
+
 //TABLE RELATIONSHIP 
+
 
 const cors = require('cors');
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/user',userRouter);
 app.use('/purchase',userRouter)

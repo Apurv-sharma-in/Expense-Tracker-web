@@ -1,12 +1,12 @@
 const axios = require('axios');
 
-const sendResetEmail = async (toEmail) => {
-    const url = 'https://brevo.com';
+const sendResetEmail = async (toEmail, resetUrl) => {
+    const url = 'https://api.brevo.com/v3/smtp/email';
 
     const emailData = {
         sender: {
             name: 'Expense Tracker',
-            email: process.env.SENDER_EMAIL 
+            email: process.env.SENDER_EMAIL
         },
         to: [
             {
@@ -16,9 +16,8 @@ const sendResetEmail = async (toEmail) => {
         subject: 'Password Reset Request - Expense Tracker',
         htmlContent: `
             <h3>Password Reset</h3>
-            <p>Hello,</p>
-            <p>This is a dummy password reset email from your Expense Tracker app.</p>
-            <p>Click here to reset your password: <a href="http://localhost:3000/password/resetpassword/dummy-id">Reset Password</a></p>
+            <p>Click the link below to set a new password:</p>
+            <p><a href="${resetUrl}">${resetUrl}</a></p>
         `
     };
 
