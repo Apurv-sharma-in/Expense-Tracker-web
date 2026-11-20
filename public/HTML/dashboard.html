@@ -10,14 +10,15 @@
 
 <body>
     <header>
-            <button id="byPremium" type="button">Buy Premium Membership</button>
-            <button id="learderBoard" style="display: none;" type="button">Leader Board</button>
-            
-        </header>
-        <div class="addItem" id="expenseSection">
-            <h1>Expense Tracker</h1>
+        <button id="byPremium" type="button">Buy Premium Membership</button>
+        <button id="learderBoard" style="display: none;" type="button">Leader Board</button>
+        <!-- Moved into header so all users can open the report screen -->
+        <button id="showReportBtn" style="background-color: #008b8b;" type="button">Day to Day Expenses</button>
+    </header>
+
+    <div class="addItem" id="expenseSection">
+        <h1>Expense Tracker</h1>
         <form action="addItem">
-            
             <label for="amunt">Amount:</label>
             <input type="number" name="amount" id="amount">
 
@@ -32,6 +33,8 @@
                 <option value="fuel">Fuel</option>
                 <option value="food">Food</option>
                 <option value="grocery">Grocery</option>
+                <option value="salary">Salary</option>
+                <option value="income">Income</option>
                 <option value="electronic">Electronic</option>
             </select>
 
@@ -39,11 +42,75 @@
         </form>
         <ul id="list"></ul>
     </div>
-     <div class="leaderboardContainer" id="leaderboardSection" style="display: none;" >
-                <h2>Expense Leaderboard</h2>
-                <ul id="leaderboardList"></ul>
-                <button id="backToExpensesBtn" type="button">Back to Expenses</button>
+
+    <div class="leaderboardContainer" id="leaderboardSection" style="display: none;">
+        <h2>Expense Leaderboard</h2>
+        <ul id="leaderboardList"></ul>
+        <button id="backToExpensesBtn" type="button">Back to Expenses</button>
+    </div>
+
+    <!-- Day to Day Expenses Report Section -->
+    <div class="addItem" id="reportSection" style="display: none; max-width: 850px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span id="reportTimestamp" style="font-size: 12px; color: #555;"></span>
+            <div>
+                <select name="reportFilter" id="reportFilter" style="padding: 6px 10px; margin-right: 8px;">
+                    <option value="all">All</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+                <button id="downloadReportBtn" type="button" style="background-color: #008b8b;">Download Report</button>
+                <button id="backFromReportBtn" type="button" style="background-color: #6b7280;">Back</button>
             </div>
+        </div>
+
+        <h2 style="text-align: center; color: #008b8b; margin-bottom: 4px;">Day to Day Expenses</h2>
+        <h3 id="reportYear" style="text-align: center; margin: 4px 0;">2026</h3>
+        <h4 id="reportMonth" style="text-align: center; margin: 4px 0 14px 0;">November 2026</h4>
+
+        <!-- Table 1: Day to Day Expenses & Income -->
+        <table border="1" style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 24px;">
+            <thead>
+                <tr style="background-color: #008b8b; color: white;">
+                    <th style="padding: 8px;">Date</th>
+                    <th style="padding: 8px;">Description</th>
+                    <th style="padding: 8px;">Category</th>
+                    <th style="padding: 8px; text-align: right;">Income</th>
+                    <th style="padding: 8px; text-align: right;">Expense</th>
+                </tr>
+            </thead>
+            <tbody id="reportTableBody"></tbody>
+            <tfoot id="reportTableFoot" style="background-color: #e0f2fe; font-weight: bold;"></tfoot>
+        </table>
+
+        <!-- Table 2: Yearly Report -->
+        <h4 style="text-align: center; margin-bottom: 8px;">Yearly Report</h4>
+        <table border="1" style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 24px;">
+            <thead>
+                <tr style="background-color: #008b8b; color: white;">
+                    <th style="padding: 8px;">Month</th>
+                    <th style="padding: 8px; text-align: right;">Income</th>
+                    <th style="padding: 8px; text-align: right;">Expense</th>
+                    <th style="padding: 8px; text-align: right;">Savings</th>
+                </tr>
+            </thead>
+            <tbody id="yearlyReportBody"></tbody>
+        </table>
+
+        <!-- Table 3: Notes Report -->
+        <h4 id="notesReportHeading" style="text-align: center; margin-bottom: 8px;">Notes Report 2026</h4>
+        <table border="1" style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr style="background-color: #008b8b; color: white;">
+                    <th style="padding: 8px; width: 25%;">Date</th>
+                    <th style="padding: 8px;">Notes</th>
+                </tr>
+            </thead>
+            <tbody id="notesReportBody"></tbody>
+        </table>
+    </div>
+
     <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
     <script src="../js/dashboard.js"></script>
 </body>
